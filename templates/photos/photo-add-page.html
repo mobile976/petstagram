@@ -1,0 +1,91 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}">
+    <title>Petstagram</title>
+</head>
+<body>
+
+<header>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <!-- Link to Home Page -->
+                <a href="{% url 'common:home' %}">
+                    <img width="50px" src="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}" alt="img1">
+                </a>
+
+                <!-- Link to Home Page -->
+                <a class="home" href="{% url 'common:home' %}">
+                    <i>Petstagram</i>
+                </a>
+            </div>
+
+            <div class="nav-links">
+                <ul class="nav-group">
+                    <li class="nav-item">
+                        <a href="{% url 'pets:pet-add' %}"><i>Add Pet</i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'photos:photo-add' %}"><i>Add Photo</i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#"><i>Profile</i></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#"><i>Log out</i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main>
+    <!-- Start Add Photo Section -->
+    <div class="edit-delete edit-photo">
+        <h2>Add photo</h2>
+        <!-- Start Add Photo Form -->
+        <form action="{% url 'photos:photo-add' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p>
+                <label for="id_photo_file">Photo file:</label>
+                <input type="file" name="photo_file" id="id_photo_file">
+            </p>
+
+            <p>
+                <label for="id_description">Description:</label>
+                <input type="text" name="description" id="id_description">
+            </p>
+
+            <p>
+                <label for="id_photo_shooting_location">Location:</label>
+                <input type="text" name="photo_shooting_location" maxlength="50" id="id_photo_shooting_location">
+            </p>
+
+            <p>
+                <label for="id_tagged_pets">Tag Pets:</label>
+                <select name="pets" id="id_tagged_pets" multiple>
+                    {% for pet in pets %}
+                        <option value="{{ pet.id }}">{{ pet.name }}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <!-- Add Photo Button -->
+            <button class="add-btn" type="submit">Add Photo</button>
+        </form>
+        <!-- End Add Photo Form -->
+    </div>
+    <!-- End Add Photo Section -->
+</main>
+
+<div class="footer">
+    <span class="footer-section">
+        © 2024 SOFTUNI WORKSHOP FOR PYTHON WEB MODULE
+    </span>
+</div>
+
+</body>
+</html>
