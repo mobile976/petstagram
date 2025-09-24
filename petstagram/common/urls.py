@@ -1,8 +1,8 @@
 from django.urls import path
-from . import views
-
-app_name = 'common'
+from petstagram.common import views
 
 urlpatterns = [
-    path('', views.home_view, name='home'),
+    path('', views.show_home_view, name='home'),
+    path('like/<int:photo_id>/', views.like_functionality, name='like'),
+    path('share/<int:photo_id>/', views.copy_link_to_clipboard, name='share'),
 ]

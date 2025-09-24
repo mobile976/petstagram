@@ -1,77 +1,27 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="icon" type="image/x-icon" href="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}">
-    <title>Petstagram</title>
-</head>
-<body>
-<header>
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <!-- Link to Home Page -->
-                <a href="{% url 'common:home' %}">
-                    <img width="50px" src="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}" alt="img1">
-                </a>
+{% extends 'base.html' %}
+{% block content %}
 
-                <!-- Link to Home Page -->
-                <a class="home" href="{% url 'common:home' %}">
-                    <i>Petstagram</i>
-                </a>
-            </div>
-
-            <div class="nav-links">
-                <ul class="nav-group">
-                    <li class="nav-item">
-                        <a href="{% url 'pets:pet-add' %}"><i>Add Pet</i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'photos:photo-add' %}"><i>Add Photo</i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'accounts:login' %}"><i>Login</i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{% url 'accounts:register' %}"><i>Register</i></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-
-<main>
-    <!-- Start Register Section -->
-    <div class="login-register-div">
-        <div class="login-register-box">
-            <h1>Petstagram</h1>
-
-            <!-- Start Register Form -->
-            <form action="">
-                <input type="text" placeholder="Username">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <input type="password" placeholder="Repeat Password">
-
-                <!-- Register Button -->
-                <button type="submit">Register</button>
-            </form>
-            <!-- End Register Form -->
-        </div>
-
-        <div class="second-option">
-            <p>Have an account? <a href="{% url 'accounts:login' %}">Log in</a></p>
-        </div>
+<!-- Start Register Section-->
+<div class="login-register-div">
+    <div class="login-register-box">
+        <h1>Petstagram</h1>
+        <!-- Start Register Form-->
+        <form action="">
+            <input type="text" placeholder="Username"><br>
+            <input type="email" placeholder="Email"><br>
+            <input type="password" placeholder="Password"><br>
+            <input type="password" placeholder="Repeat Password"><br>
+            <!-- Register Button-->
+            <button type="submit">Register</button>
+        </form>
+        <!-- End Register Form -->
     </div>
-    <!-- End Register Section -->
-</main>
-
-<div class="footer">
-    <span class="footer-section">
-        © 2024 SOFTUNI WORKSHOP FOR PYTHON WEB MODULE
-    </span>
+    <div class="second-option">
+        <p>Have an account?
+            <!-- Link to Login Page-->
+            <a href="#">Log in</a>
+        </p>
+    </div>
 </div>
-</body>
-</html>
+<!-- End Register Section-->    
+{% endblock %}

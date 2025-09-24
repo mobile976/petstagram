@@ -1,59 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Petstagram - Page Not Found</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link rel="icon" type="image/x-icon" href="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}">
-</head>
-<body>
-
-<header>
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">
-                <!-- Link to Home Page -->
-                <a href="{% url 'common:home' %}">
-                    <img width="50px" src="{% static 'images/free-30-instagram-stories-icons23_122570.png' %}" alt="logo">
-                </a>
-                <a class="home" href="{% url 'common:home' %}">
-                    <i>Petstagram</i>
-                </a>
-            </div>
-
-            <div class="nav-links">
-                <ul class="nav-group">
-                    <li class="nav-item"><a href="{% url 'pets:pet-add' %}"><i>Add Pet</i></a></li>
-                    <li class="nav-item"><a href="{% url 'photos:photo-add' %}"><i>Add Photo</i></a></li>
-                    <li class="nav-item"><a href="{% url 'accounts:login' %}"><i>Login</i></a></li>
-                    <li class="nav-item"><a href="{% url 'accounts:register' %}"><i>Register</i></a></li>
-                    <li class="nav-item"><a href="#"><i>Profile</i></a></li>
-                    <li class="nav-item"><a href="#"><i>Log out</i></a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
-
-<main>
-    <!-- 404 page -->
-    <div class="not-found-img">
-        <img src="{% static 'images/zillow-404-page-5f3ed6a6abaa5.gif' %}" alt="404 not found gif">
-    </div>
-
-    <div class="not-found">
-        <h1>Uh oh,<br> something broke.</h1>
-        <h3>Error 404 – page not found.</h3>
-        <a href="{% url 'common:home' %}">
-            <button>Return to Petstagram</button>
-        </a>
-    </div>
-</main>
-
-<div class="footer">
-    <span class="footer-section">© 2024 SOFTUNI WORKSHOP FOR PYTHON WEB MODULE</span>
+<!-- 404 page -->
+<div class="not-found-img">
+    <img src="{% static 'images/zillow-404-page-5f3ed6a6abaa5.gif' %}" alt="404 not found gif">
 </div>
 
-</body>
-</html>
+<div class="not-found">
+    <h1>Uh oh,<br> something broke.</h1>
+    <h3>Error 404 – page not found.</h3>
+    <a href="{% url 'common:home' %}">
+        <button>Return to Petstagram</button>
+    </a>
+</div>
+{% endblock %}

@@ -1,8 +1,6 @@
 # pets/urls.py
 from django.urls import path
-from . import views
-
-app_name = 'pets'
+from petstagram.pets import views
 
 urlpatterns = [
     path('add/', views.pet_add_view, name='pet-add'),
