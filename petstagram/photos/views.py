@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from petstagram.accounts import models
 from petstagram.photos.models import Photo
 
 def photo_add(request):
