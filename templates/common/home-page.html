@@ -5,15 +5,14 @@
   <div class="col-9">
 
     <form class="searchbar" method="post">
-      {% csrf_token %}
       <input type="text" placeholder="Search by pet name...">
       <button>
         <img src="{% static 'images/search.png' %}" height="18" alt="img2">
       </button>
     </form>
-
+     <!-- Start Pet Photos Post Section -->
     {% include 'common/pet-posts.html' %}
-
+    <!-- End Pet Photos Post Section -->
   </div>
 </div>
 {% endblock %}

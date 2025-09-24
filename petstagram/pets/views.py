@@ -1,11 +1,17 @@
 from django.shortcuts import render
+from petstagram.pets.models import Pet
 
 def pet_add_view(request):
     return render(request, 'pets/pet-add-page.html')
 
-def pet_details_view(request, username, pet_slug):
-    ctx = {'username': username, 'pet_slug': pet_slug}
-    return render(request, 'pets/pet-details-page.html', ctx)
+def show_pet_details(request, username, pet_slug):
+    pet = Pet.objects.get(slug=pet_slug)
+    all_photos = pet.photo_set.all()
+    context = {
+        'pet': pet,
+        'all_photos': all_photos,
+    }
+    return render(request, template_name='pets/pet-details-page.html', context=context)
 
 def pet_edit_view(request, username, pet_slug):
     ctx = {'username': username, 'pet_slug': pet_slug}
