@@ -1,8 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from petstagram.pets.models import Pet
+from petstagram.pets.forms import PetForm
 
-def pet_add_view(request):
-    return render(request, 'pets/pet-add-page.html')
+def add_pet(request):
+    form = PetForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return redirect(to='profile-details', pk=1)
+    context = {'form': form}
+    return render(request, template_name='pets/pet-add-page.html', context=context)
 
 def show_pet_details(request, username, pet_slug):
     pet = Pet.objects.get(slug=pet_slug)
@@ -13,10 +19,24 @@ def show_pet_details(request, username, pet_slug):
     }
     return render(request, template_name='pets/pet-details-page.html', context=context)
 
-def pet_edit_view(request, username, pet_slug):
-    ctx = {'username': username, 'pet_slug': pet_slug}
-    return render(request, 'pets/pet-edit-page.html', ctx)
+def edit_pet(request, username, pet_slug):
+    pet = Pet.objects.get(slug=pet_slug)
+    if request.method == 'GET':
+        form = PetForm(instance=pet, initial=pet.__dict__)
+    else:
+        form = PetForm(request.POST, instance=pet)
+        if form.is_valid():
+            form.save()
+            return redirect(to='pet-details', username=username, pet_slug=pet_slug)
+        
+        context = {'form': form}
+        return render(request, template_name='pets/pet-edit-page.html', context=context)
 
-def pet_delete_view(request, username, pet_slug):
-    ctx = {'username': username, 'pet_slug': pet_slug}
-    return render(request, 'pets/pet-delete-page.html', ctx)
+def delete_pet(request, username, pet_slug):
+    pet = Pet.objects.get(slug=pet_slug)
+    if request.method == 'POST':
+        pet.delete()
+        return redirect(to='profile-details', pk=1)
+    form = PetDeleteForm(initial=pet.__dict__)
+    context = {'form': form}
+    return render(request, template_name='pets/pet-delete-page.html', context=context)

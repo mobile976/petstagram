@@ -5,20 +5,9 @@
 <div class="edit-delete edit-photo">
     <h2>Edit Pet</h2>
     <!-- Start Edit Pet Form -->
-    <form action="{% url 'pets:pet_edit' username=user.username pet_slug=pet.slug %}" method="post">
+    <form action="#" method="post">
         {% csrf_token %}
-        <p>
-            <label for="pet-name">Pet name: </label>
-            <input type="text" name="name" placeholder="Name" value="{{ pet.name }}">
-        </p>
-        <p>
-            <label for="pet-date">Date of birth: </label>
-            <input type="date" name="birth_date" value="{{ pet.birth_date }}">
-        </p>
-        <p>
-            <label for="pet-image">Link to image: </label>
-            <input type="text" name="image" placeholder="Link to image" value="{{ pet.image_url }}" alt="pet image">
-        </p>
+        {{ form.as_p }}
         <!-- Edit Pet Button -->
         <button class="edit-btn" type="submit">Edit</button>
     </form>
