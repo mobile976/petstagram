@@ -1,51 +1,16 @@
-{% load static %}
-
 {% for photo in all_photos %}
+{% load static %}
 <div class="card">
-  <article class="post" id="photo-{{ photo.id }}">
-
-    <div class="top">
-      <div class="userDetails">
-        <a href="#">
-          <div class="profilepic">
-            <div class="profile_img">
-              <div class="image">
-                <img src="{% static '/images/person.png' %}" alt="img8">
-              </div>
-            </div>
-          </div>
-        </a>
-
-        <h3>
-          <a href="#">
-            <!-- IF user has first name and last name -->
-            Diyan Kalaydzhiev
-            <!-- else -->
-            <!-- show user username -->
-          </a>
-          <br>
-
-          {% if photo.location %}
-          <span>{{ photo.location }}</span>
-          {% endif %}
-
-          {% if request.user == photo.user %}
-          <div class="edit-delete-btns">
-            <a href="{% url 'edit-photo' photo.pk %}">
-              <img class="edit-img" src="{% static '/images/edit-pen-icon-6.jpg' %}" alt="edit button">
-            </a>
-            <a href="{% url 'delete-photo' photo.pk %}">
-              <img class="bin-img" src="{% static '/images/icon-remove-22.jpg' %}" alt="bin button">
-            </a>
-          </div>
-          {% endif %}
-        </h3>
-      </div>
-    </div>
-    <!-- /userDetails -->
+  <article class="post" id="photo-{{ photo.id }}"> 
 
     <div class="imgBx">
       <img src="{{ photo.photo.url }}" alt="post" class="cover">
+    </div>
+
+    <div class="userDetails">
+      {% if photo.location %}
+      <span>{{ photo.location }}</span>
+      {% endif %}
     </div>
 
     <div class="taggedPets">
@@ -80,6 +45,7 @@
     </div>
 
     <span class="likes">{{ photo.like_set.count }} likes</span>
+
     <h5 class="postTime">{{ photo.date_of_publication }}</h5>
 
     <div class="addComments">
@@ -88,8 +54,6 @@
         {{ comment_form }}
         <button type="submit">Post</button>
       </form>
-    </div>
-
   </article>
 </div>
 {% endfor %}
