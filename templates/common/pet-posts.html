@@ -49,11 +49,13 @@
     </div>
 
     <div class="taggedPets">
-      {% for pet in photo.tagged_pets.all %}
+      {% if photo.user.username %}
       <a href="{% url 'pet-details' photo.user.username pet.slug %}">
         <p class="message"><b>{{ pet.name }}</b></p>
       </a>
-      {% endfor %}
+      {% else %}
+      <p class="message"><b>{{ pet.name }}</b></p>
+      {% endif %}
     </div>
 
     <a class="detailsLink" href="{% url 'photo-details' photo.pk %}">
