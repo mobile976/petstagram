@@ -1,5 +1,7 @@
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.shortcuts import redirect, render, resolve_url
 from petstagram.common.forms import CommentForm, SearchForm
+from django.views.generic import ListView
 from petstagram.common.models import Like
 from petstagram.photos.models import Photo
 from pyperclip import copy
@@ -8,9 +10,25 @@ from pyperclip import copy
 def show_home_page(request):
     all_photos = Photo.objects.all()
     comment_form = CommentForm()
-    search_form = SearchForm(request.GET or None)
-    if search_form.is_valid():
-        all_photos = all_photos.filter(tagged_pets__name__icontains=search_form.cleaned_data['pet_name'])
+    search_form = SearchForm()
+
+    if request.method == 'POST':
+        search_form = SearchForm(request.POST)
+        
+        if search_form.is_valid():
+            all_photos = all_photos.filter(
+                tagged_pets__name__icontains=search_form.cleaned_data['pet_name'])
+
+        photos_per_page = 1
+        paginator = Paginator(all_photos, photos_per_page)
+        page = request.GET.get('page')
+
+        try:
+            all_photos = paginator.page(page)
+        except PageNotAnInteger:
+            all_photos = paginator.page(1)
+        except EmptyPage:
+            all_photos = paginator.page(paginator.num_pages)
 
     context = {
         'all_photos': all_photos,
@@ -19,6 +37,26 @@ def show_home_page(request):
     }
     return render(request, template_name='common/home-page.html', context=context)
 
+class HomePageView(ListView):
+    model = Photo
+    template_name = 'common/home-page.html'
+    context_object_name = 'all_photos'
+    paginate_by = 1
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentForm()
+        context['search_form'] = SearchForm(self.request.GET)
+        return context
+    
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        pet_name = self.request.GET.get('pet_name')
+
+        if pet_name:
+            queryset = queryset.filter(tagged_pets__name__icontains=pet_name)
+
+        return queryset
 
 def like_functionality(request, photo_id):
     photo = Photo.objects.get(id=photo_id)

@@ -4,16 +4,50 @@
 <div class="container">
   <div class="col-9">
 
-    <form class="searchbar" method="post">
+    <!-- Start Search Bar Section -->
+    <!-- Search bar -->
+    <form class="searchbar" method="get">
       {% csrf_token %}
       {{search_form}}
       <button>
         <img src="{% static 'images/search.png' %}" height="18" alt="img2">
       </button>
     </form>
-     <!-- Start Pet Photos Post Section -->
+    <!-- Start Pet Photos Post Section -->
     {% include 'common/pet-posts.html' %}
     <!-- End Pet Photos Post Section -->
+
+    <!-- Start Pagination Section -->
+    <div class="pagination">
+      <span class="current">
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+      </span>
+
+      <span class="step-links-buttons">
+
+        <!-- If there are previous and next photos -->
+        {% if page_obj.has_previous and page_obj.has_next %}
+        <a href="?page={{ page_obj.previous_page_number }}">
+          <i class="fa-solid fa-arrow-left"></i>
+        </a>
+        <a href="?page={{ page_obj.next_page_number }}">
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+
+        <!-- If there are only previous photos -->
+        {% elif page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">
+          <i class="fa-solid fa-arrow-left"></i>
+        </a>
+
+        <!-- If there are only next photos -->
+        {% elif page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">
+          <i class="fa-solid fa-arrow-right"></i>
+        </a>
+        {% endif %}
+
+      </span>
+    </div>
   </div>
-</div>
-{% endblock %}
+  {% endblock %}
