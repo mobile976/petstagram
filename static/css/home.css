@@ -449,3 +449,55 @@ div.footer {
     color: #ff0000;
 }
 
+/* Pagination container */
+.pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* Buttons row */
+.step-links-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;               /* margin орлуулах тул :first/last-child хэрэггүй */
+  text-shadow: none;
+}
+
+/* Links + current page pill */
+.step-links-buttons a,
+.step-links-buttons span.current {
+  font-size: 16px;
+  padding: 8px 12px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: #fff;       /* default: цагаан фон */
+  color: #333;            /* харанхувтар текст — цагаан дээр уншигдана */
+  transition: background-color .2s, color .2s, border-color .2s;
+}
+
+/* Hover state for links */
+.step-links-buttons a:hover {
+  background: #3498db;
+  color: #fff;
+  border-color: #3498db;
+}
+
+/* Current page (идэвхтэй) */
+.step-links-buttons span.current {
+  background: #3498db;
+  color: #fff;
+  border-color: #3498db;
+  cursor: default;
+}
+
+/* Disabled anchors (жишээ нь өмнөх/дараах байхгүй үед) */
+.step-links-buttons a.disabled,
+.step-links-buttons a[aria-disabled="true"] {
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed;
+}
