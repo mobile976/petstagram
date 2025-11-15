@@ -6,7 +6,10 @@ from petstagram.common.forms import CommentForm
 def add_photo(request):
     form = PhotoCreateForm(request.POST or None, request.FILES or None)
     if form.is_valid():
-        form.save()
+        photo = form.save(commit=False)
+        photo.user = request.user
+        photo.save()
+        form.save_m2m()
         return redirect('home')
     context = {
         'form': form,
@@ -31,7 +34,7 @@ def edit_photo(request, pk):
     form = PhotoEditForm(request.POST or None, request.FILES or None, instance=photo)
     if form.is_valid():
         form.save()
-        return redirect('show photo details', pk=pk)
+        return redirect('photo-details', pk=pk)
     context = {
         'form': form,
         'pk': pk,

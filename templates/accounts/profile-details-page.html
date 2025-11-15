@@ -1,45 +1,80 @@
 {% extends 'base.html' %}
-{% block content %}
 {% load static %}
+{% block content %}
 
 <div class="pet-profile">
-  <!-- Start Pet Personal Data Section -->
+
   <div class="profile">
     <div class="profile-data">
       <div class="profile_img">
         <div class="image">
-          <!-- Pet URL Image -->
-          <img src="#" alt="img8">
+          {% if profile.profile_picture %}
+          <img src="{{ profile.profile_picture }}" alt="profile picture">
+          {% else %}
+          <img src="{% static 'images/default-user.png' %}" alt="profile picture">
+          {% endif %}
         </div>
       </div>
+
       <div class="personal">
         <div class="edit">
-          <!-- Pet Name -->
-          <p>Rex</p>
-          <!-- Pet Edit Button -->
-          <a href="#">
+          <p>
+            {% if profile.first_name or profile.last_name %}
+            {{ profile.first_name }} {{ profile.last_name }}
+            {% else %}
+            {{ profile.user.email }}
+            {% endif %}
+          </p>
+
+          <a href="{% url 'profile-edit' profile.pk %}">
             <img class="edit-img" src="{% static 'images/edit-pen-icon-6.jpg' %}" alt="edit button">
           </a>
-          <!-- Pet Delete Button -->
-          <a href="#">
-            <img class="bin-img" src="{% static 'images/icon-remove-22.jpg' %}" alt="bin button">
+
+          <a href="{% url 'profile-delete' profile.pk %}">
+            <img class="bin-img" src="{% static 'images/icon-remove-22.jpg' %}" alt="delete button">
           </a>
         </div>
+
         <div class="data">
-          <!-- Pet Total Photos -->
-          <span>125</span>
+          <span>{{ photos_count }}</span>
           <p>photos</p>
+        </div>
+        <div class="data">
+          <span>{{ pets_count }}</span>
+          <p>pets</p>
+        </div>
+        <div class="data">
+          <span>{{ total_likes_count }}</span>
+          <p>likes</p>
         </div>
       </div>
     </div>
   </div>
-  <!-- End Pet Personal Data Section -->
-  <div class="pet-posts">
 
-    {% include 'common/pet-posts.html' %}
-
-    <img class="no-posts" src="{% static '/images/no_posts.png' %}" alt="no posts image">
+  <div class="statuses">
+    {% for pet in user_pets %}
+    <a href="{% url 'pet-details' pet.user.profile.get_profile_name|lower pet.slug %}">
+      <div class="head-pet">
+        <div class="status">
+          <div class="image">
+            <img src="{{ pet.personal_photo }}" alt="pet img">
+          </div>
+        </div>
+        <p>{{ pet.name }}</p>
+      </div>
+    </a>
+    {% endfor %}
   </div>
+  <div class="pet-photos">
+    {% for photo in user_photos %}
+    {% if photo.photo %}
+    <a href="{% url 'photo-details' photo.id %}">
+      <img src="{{ photo.photo.url }}" alt="pet img">
+    </a>
+    {% endif %}
+    {% endfor %}
+  </div>
+
 </div>
 
 {% endblock %}
